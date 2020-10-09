@@ -12,19 +12,19 @@ class TableViewController: UITableViewController {
     var news: [Item] = []
     var locator = ServiceLocator()
     var presenter : NewsPresenter?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = NewsPresenter(getNews: locator.getNews, ui: self)
+        presenter = NewsPresenter(getNews: locator.getNews, mapper: locator.itemMapper, ui: self)
     }
     
     func remove(at index: Int) {
         news.remove(at: index)
     }
-    
+
     @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
-            tableView.reloadData()
-            sender.endRefreshing()
+        presenter?.loadData()
+        refreshControl = sender
     }
     
     // MARK: - Table View
@@ -51,6 +51,10 @@ class TableViewController: UITableViewController {
 extension TableViewController: NewsUI {
     func displayNews(items: [Item]){
         news = items
+        tableView.reloadData()
+        if let control = refreshControl, control.isRefreshing {
+            control.endRefreshing()
+        }
     }
 }
 

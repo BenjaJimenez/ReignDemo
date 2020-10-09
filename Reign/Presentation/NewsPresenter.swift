@@ -7,35 +7,30 @@
 
 import Foundation
 
-struct Item {
-    var id: String
-    var title: String
-    var author: String
-    var date: String
-}
-
 struct NewsPresenter {
     
     var getNews: GetNews
+    var mapper: ItemMapper
     var ui: NewsUI?
     
-    init(getNews: GetNews, ui: NewsUI) {
+    init(getNews: GetNews, mapper: ItemMapper, ui: NewsUI) {
         self.getNews = getNews
+        self.mapper = mapper
         self.ui = ui
         loadData()
     }
         
     func loadData(){
-        let example = [
-            Item(id: "1",title: "title",author: "author", date: "date"),
-            Item(id: "2",title: "title",author: "author",date:"date"),
-            Item(id: "3",title: "title",author: "author",date:"date"),
-            Item(id: "4",title: "title",author: "author",date:"date")
-        ]
         getNews.execute{ news in
-            print(news)
+            if let news = news {
+                let items = mapper.mapAll(news)
+                if items.count > 0 {
+                    OperationQueue.main.addOperation {
+                        ui?.displayNews(items: items)
+                    }
+                }
+            }
         }
-        ui?.displayNews(items: example)
     }
     
     func deleteItem(id: String){

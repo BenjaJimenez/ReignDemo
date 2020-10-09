@@ -26,4 +26,8 @@ class ServiceLocator {
         return NewsAPIClient.shared
     }
 
+//MARK: - Mappers
+    var itemMapper: ItemMapper {
+        return ItemMapper()
+    }
 }

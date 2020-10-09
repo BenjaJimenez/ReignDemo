@@ -18,7 +18,7 @@ struct NewsRepository: Repository {
     func getNews(completion: @escaping ([News]?) -> Void) {
         apiClient.getNews { (success, response) in
             if success, let response = response, response.count > 0 {
-                
+                completion(response)
             }
         }
     }
