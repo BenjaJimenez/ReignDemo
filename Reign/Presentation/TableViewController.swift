@@ -7,46 +7,28 @@
 
 import UIKit
 
-struct Item {
-    var id: String
-    var title: String
-    var author: String
-    var date: String
-}
-
-let example = [
-    Item(id: "1",title: "title",author: "author", date: "date"),
-    Item(id: "2",title: "title",author: "author",date:"date"),
-    Item(id: "3",title: "title",author: "author",date:"date"),
-    Item(id: "4",title: "title",author: "author",date:"date")
-]
-
 class TableViewController: UITableViewController {
 
     var news: [Item] = []
-    
+    var locator = ServiceLocator()
+    var presenter : NewsPresenter?
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadData()
-    }
-    
-    func loadData(){
-        news = example
-        tableView.reloadData()
+        presenter = NewsPresenter(getNews: locator.getNews, mapper: locator.itemMapper, ui: self)
     }
     
     func remove(at index: Int) {
         news.remove(at: index)
     }
-    
+
     @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
-            news = example
-            tableView.reloadData()
-            sender.endRefreshing()
+        presenter?.loadData()
+        refreshControl = sender
     }
     
     // MARK: - Table View
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return news.count
     }
@@ -61,6 +43,17 @@ class TableViewController: UITableViewController {
         if editingStyle == .delete {
             remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+}
+
+// MARK: - UI
+extension TableViewController: NewsUI {
+    func displayNews(items: [Item]){
+        news = items
+        tableView.reloadData()
+        if let control = refreshControl, control.isRefreshing {
+            control.endRefreshing()
         }
     }
 }
