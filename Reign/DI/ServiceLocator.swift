@@ -17,6 +17,10 @@ class ServiceLocator {
     var ignoreNews: IgnoreNews {
         return IgnoreNews(repository: repository)
     }
+    
+    var storeNews: StoreNews {
+        return StoreNews(repository: repository)
+    }
 
 
 //MARK: - Repositories
@@ -31,7 +35,7 @@ class ServiceLocator {
     }
     
     var localDatasource: LocalDatasource {
-        return LocalDatasource()
+        return LocalDatasource.shared
     }
 
 //MARK: - Mappers

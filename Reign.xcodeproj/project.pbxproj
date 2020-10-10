@@ -25,6 +25,7 @@
 		4376C35F2530FBEB00992923 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376C35E2530FBEB00992923 /* Item.swift */; };
 		4376C3642530FC1800992923 /* ItemMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376C3632530FC1800992923 /* ItemMapper.swift */; };
 		4376C36C2531488500992923 /* LocalDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376C36B2531488500992923 /* LocalDatasource.swift */; };
+		4376C3702531555E00992923 /* StoreNews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376C36F2531555E00992923 /* StoreNews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		4376C35E2530FBEB00992923 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		4376C3632530FC1800992923 /* ItemMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemMapper.swift; sourceTree = "<group>"; };
 		4376C36B2531488500992923 /* LocalDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDatasource.swift; sourceTree = "<group>"; };
+		4376C36F2531555E00992923 /* StoreNews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreNews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 			children = (
 				4376C33D2530DC7D00992923 /* GetNews.swift */,
 				4376C3402530DCAB00992923 /* IgnoreNews.swift */,
+				4376C36F2531555E00992923 /* StoreNews.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				4376C3642530FC1800992923 /* ItemMapper.swift in Sources */,
 				4376C3212530C07300992923 /* TableViewController.swift in Sources */,
 				4376C3332530C57A00992923 /* TableViewCell.swift in Sources */,
+				4376C3702531555E00992923 /* StoreNews.swift in Sources */,
 				4376C3382530D97D00992923 /* NewsPresenter.swift in Sources */,
 				4376C33E2530DC7D00992923 /* GetNews.swift in Sources */,
 				4376C31D2530C07300992923 /* AppDelegate.swift in Sources */,

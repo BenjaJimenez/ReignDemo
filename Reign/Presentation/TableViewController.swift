@@ -15,7 +15,7 @@ class TableViewController: UITableViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = NewsPresenter(getNews: locator.getNews, ignoreNews: locator.ignoreNews, mapper: locator.itemMapper, ui: self)
+        presenter = NewsPresenter(getNews: locator.getNews, ignoreNews: locator.ignoreNews, storeNews: locator.storeNews, mapper: locator.itemMapper, ui: self)
     }
     
     func remove(at index: Int) {

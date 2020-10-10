@@ -11,25 +11,28 @@ struct NewsPresenter {
     
     var getNews: GetNews
     var ignoreNews: IgnoreNews
+    var storeNews: StoreNews
     var mapper: ItemMapper
     var ui: NewsUI?
     
-    init(getNews: GetNews, ignoreNews: IgnoreNews, mapper: ItemMapper, ui: NewsUI) {
+    init(getNews: GetNews, ignoreNews: IgnoreNews, storeNews: StoreNews, mapper: ItemMapper, ui: NewsUI) {
         self.getNews = getNews
         self.ignoreNews = ignoreNews
+        self.storeNews = storeNews
         self.mapper = mapper
         self.ui = ui
         loadData()
     }
         
     func loadData(){
-        getNews.execute{ news in
-            if let news = news {
+        getNews.execute{ news, cache in
+            if let news = news, news.count > 0 {
                 let items = mapper.mapAll(news, filterList: ignoreNews.getAll())
-                if items.count > 0 {
-                    OperationQueue.main.addOperation {
-                        ui?.displayNews(items: items)
-                    }
+                OperationQueue.main.addOperation {
+                    ui?.displayNews(items: items)
+                }
+                if !cache {
+                    storeNews.set(news)
                 }
             }
         }
