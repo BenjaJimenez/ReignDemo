@@ -12,19 +12,25 @@ struct Response: Codable {
 }
 
 struct News: Codable {
+    var objectID: String
     var created_at: String
+    var author: String
     var story_title: String?
     var title: String?
-    var author: String?
+    var url: String?
+    
+
     
     
-    private enum CodingKeys : String, CodingKey { case created_at, story_title, title, author}
+    private enum CodingKeys : String, CodingKey { case objectID, created_at, story_title, title, author, url}
 
      init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        objectID = try container.decode(String.self, forKey: .objectID)
         created_at = try container.decode(String.self, forKey: .created_at)
+        author = try container.decode(String.self, forKey: .author)
         story_title = try container.decodeIfPresent(String.self, forKey: .story_title)
         title = try container.decodeIfPresent(String.self, forKey: .title)
-        author = try container.decodeIfPresent(String.self, forKey: .author)
+        url = try container.decodeIfPresent(String.self, forKey: .url)
     }
 }

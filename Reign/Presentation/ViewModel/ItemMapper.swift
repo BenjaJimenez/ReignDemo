@@ -19,9 +19,13 @@ struct ItemMapper {
         viewFormatter.dateTimeStyle = .named
     }
     
-    func mapAll(_ news: [News]) -> [Item] {
+    func mapAll(_ news: [News], filterList: [String]) -> [Item] {
         var items: [Item] = []
         for article in news {
+            if filterList.contains(article.objectID) {
+                continue
+            }
+            
             if let item = map(from: article) {
                 items.append(item)
             }
@@ -32,10 +36,9 @@ struct ItemMapper {
     func map(from article: News) -> Item? {
         
         let title = article.story_title ?? article.title ?? ""
-        let author = article.author ?? ""
-        let created = article.created_at
+        let author = article.author
         let date = inputFormatter.date(from: article.created_at)
         
-        return Item(id: created+title, title: title, author: author, date: viewFormatter.string(for: date) ?? "")
+        return Item(id: article.objectID, title: title, author: author, date: viewFormatter.string(for: date) ?? "")
     }
 }

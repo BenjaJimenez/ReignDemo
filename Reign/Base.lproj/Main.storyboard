@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rCM-nF-bvi">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17156"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -55,8 +55,8 @@
                                     <constraints>
                                         <constraint firstItem="yAy-JI-LRN" firstAttribute="leading" secondItem="sgn-JK-0Dn" secondAttribute="leadingMargin" id="CTj-UM-Ehj"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="yAy-JI-LRN" secondAttribute="trailing" id="Fzr-lg-5sG"/>
-                                        <constraint firstItem="yAy-JI-LRN" firstAttribute="top" secondItem="sgn-JK-0Dn" secondAttribute="top" constant="10" id="ob3-6N-aPs"/>
-                                        <constraint firstAttribute="bottom" secondItem="yAy-JI-LRN" secondAttribute="bottom" constant="10" id="zSx-5W-wwL"/>
+                                        <constraint firstItem="yAy-JI-LRN" firstAttribute="top" secondItem="sgn-JK-0Dn" secondAttribute="top" priority="999" constant="10" id="ob3-6N-aPs"/>
+                                        <constraint firstAttribute="bottom" secondItem="yAy-JI-LRN" secondAttribute="bottom" priority="999" constant="10" id="zSx-5W-wwL"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -72,6 +72,7 @@
                         </connections>
                     </tableView>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="7h1-c4-NSM">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
                             <action selector="refreshControlValueChanged:" destination="rCM-nF-bvi" eventType="valueChanged" id="R14-tD-juC"/>

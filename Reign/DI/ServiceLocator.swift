@@ -13,17 +13,25 @@ class ServiceLocator {
     var getNews: GetNews {
         return GetNews(repository: repository)
     }
+    
+    var ignoreNews: IgnoreNews {
+        return IgnoreNews(repository: repository)
+    }
 
 
 //MARK: - Repositories
     var repository: Repository {
-        return NewsRepository(apiClient: apiClient)
+        return NewsRepository(apiClient: apiClient, localDatasource: localDatasource)
     }
     
 
 //MARK: - Datasources
     var apiClient: NewsAPIClient {
         return NewsAPIClient.shared
+    }
+    
+    var localDatasource: LocalDatasource {
+        return LocalDatasource()
     }
 
 //MARK: - Mappers
