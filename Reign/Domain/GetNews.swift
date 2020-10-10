@@ -10,7 +10,7 @@ import Foundation
 struct GetNews {
     var repository: Repository
     
-    func execute(completion: @escaping ([News]?) -> Void){
+    func execute(completion: @escaping ([News]?, _ cache: Bool) -> Void){
         repository.getNews(completion: completion)
     }
 }
