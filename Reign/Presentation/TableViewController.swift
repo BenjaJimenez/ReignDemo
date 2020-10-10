@@ -15,16 +15,17 @@ class TableViewController: UITableViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = NewsPresenter(getNews: locator.getNews, mapper: locator.itemMapper, ui: self)
+        presenter = NewsPresenter(getNews: locator.getNews, ignoreNews: locator.ignoreNews, mapper: locator.itemMapper, ui: self)
     }
     
     func remove(at index: Int) {
+        let item = news[index]
         news.remove(at: index)
+        presenter?.deleteItem(id: item.id)
     }
 
     @IBAction func refreshControlValueChanged(_ sender: UIRefreshControl) {
         presenter?.loadData()
-        refreshControl = sender
     }
     
     // MARK: - Table View
