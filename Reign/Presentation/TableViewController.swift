@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 class TableViewController: UITableViewController {
 
@@ -46,6 +47,12 @@ class TableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = news[indexPath.row]
+        presenter?.selectedItem(id: item.id)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 // MARK: - UI
@@ -56,6 +63,47 @@ extension TableViewController: NewsUI {
         if let control = refreshControl, control.isRefreshing {
             control.endRefreshing()
         }
+    }
+    
+    func displayMessage(msg: String){
+        let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func displayURL(url: URL){
+        displayWebView(url: url)
+    }
+}
+
+// MARK: - Router
+
+extension TableViewController {
+    func displayWebView(url: URL) {
+        
+        let controller = UIViewController()
+        let webView = WKWebView()
+        controller.view.addSubview(webView)
+        
+        //Constraints
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        controller.view.leftAnchor.constraint(equalTo: webView.leftAnchor).isActive = true
+        controller.view.rightAnchor.constraint(equalTo: webView.rightAnchor).isActive = true
+        controller.view.topAnchor.constraint(equalTo: webView.topAnchor).isActive = true
+        controller.view.bottomAnchor.constraint(equalTo: webView.bottomAnchor).isActive = true
+        
+        //Navbar back button
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(goBack))
+        let navController = UINavigationController(rootViewController: controller)
+        
+        self.present(navController, animated:true) {
+            webView.load(URLRequest(url: url))
+        }
+        
+    }
+    
+    @objc func goBack(){
+        dismiss(animated: true, completion: nil)
     }
 }
 
