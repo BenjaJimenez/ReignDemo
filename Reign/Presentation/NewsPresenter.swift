@@ -7,13 +7,15 @@
 
 import Foundation
 
-struct NewsPresenter {
+class NewsPresenter {
     
     var getNews: GetNews
     var ignoreNews: IgnoreNews
     var storeNews: StoreNews
     var mapper: ItemMapper
-    var ui: NewsUI?
+    weak var ui: NewsUI?
+    
+    var news = [News]()
     
     init(getNews: GetNews, ignoreNews: IgnoreNews, storeNews: StoreNews, mapper: ItemMapper, ui: NewsUI) {
         self.getNews = getNews
@@ -25,14 +27,19 @@ struct NewsPresenter {
     }
         
     func loadData(){
-        getNews.execute{ news, cache in
+        getNews.execute{ [weak self] news, cache in
+            guard let self = self else {
+                return
+            }
+            
             if let news = news, news.count > 0 {
-                let items = mapper.mapAll(news, filterList: ignoreNews.getAll())
+                self.news = news
+                let items = self.mapper.mapAll(news, filterList: self.ignoreNews.getAll())
                 OperationQueue.main.addOperation {
-                    ui?.displayNews(items: items)
+                    self.ui?.displayNews(items: items)
                 }
                 if !cache {
-                    storeNews.set(news)
+                    self.storeNews.set(news)
                 }
             }
         }
@@ -41,8 +48,24 @@ struct NewsPresenter {
     func deleteItem(id: String){
         ignoreNews.add(id: id)
     }
+    
+    func selectedItem(id: String){
+        for item in news {
+            if item.objectID == id {
+                if let url = URL(string: item.story_url ?? "") {
+                    ui?.displayURL(url: url)
+                }else {
+                    ui?.displayMessage(msg: "No URL available for article")
+                }
+                return
+            }
+        }
+        ui?.displayMessage(msg: "Article not found")
+    }
 }
 
-protocol NewsUI {
+protocol NewsUI: class {
     func displayNews(items: [Item])
+    func displayMessage(msg: String)
+    func displayURL(url: URL)
 }

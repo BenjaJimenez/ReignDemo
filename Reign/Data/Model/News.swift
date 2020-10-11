@@ -17,12 +17,12 @@ struct News: Codable {
     var author: String
     var story_title: String?
     var title: String?
-    var url: String?
+    var story_url: String?
     
 
     
     
-    private enum CodingKeys : String, CodingKey { case objectID, created_at, story_title, title, author, url}
+    private enum CodingKeys : String, CodingKey { case objectID, created_at, story_title, title, author, story_url}
 
      init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -31,6 +31,6 @@ struct News: Codable {
         author = try container.decode(String.self, forKey: .author)
         story_title = try container.decodeIfPresent(String.self, forKey: .story_title)
         title = try container.decodeIfPresent(String.self, forKey: .title)
-        url = try container.decodeIfPresent(String.self, forKey: .url)
+        story_url = try container.decodeIfPresent(String.self, forKey: .story_url)
     }
 }
